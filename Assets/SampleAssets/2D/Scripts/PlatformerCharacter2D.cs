@@ -23,13 +23,19 @@ namespace UnitySampleAssets._2D
         private float ceilingRadius = .01f; // Radius of the overlap circle to determine if the player can stand up
         private Animator anim; // Reference to the player's animator component.
 
-
+        Transform playerGraphics;   // Reference to the graphics so we can change direction  (Added by CAB as part of Brakeys 2D Platformer tutorial)
         private void Awake()
         {
             // Setting up references.
             groundCheck = transform.Find("GroundCheck");
             ceilingCheck = transform.Find("CeilingCheck");
             anim = GetComponent<Animator>();
+
+            playerGraphics = transform.FindChild("Graphics");     // (Added by CAB as part of Brakeys 2D Platformer tutorial) 
+            if (playerGraphics == null)
+            {
+                Debug.Log("Let's freak out!  There are no 'Graphics' objects as a child of the player");
+            }
         }
 
 
@@ -97,9 +103,9 @@ namespace UnitySampleAssets._2D
             facingRight = !facingRight;
 
             // Multiply the player's x local scale by -1.
-            Vector3 theScale = transform.localScale;
+            Vector3 theScale = playerGraphics.localScale;
             theScale.x *= -1;
-            transform.localScale = theScale;
+            playerGraphics.localScale = theScale;
         }
     }
 }
